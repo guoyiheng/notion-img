@@ -6,8 +6,6 @@ const mdList = fileList.filter(item => item.endsWith('.md'))
 console.log('mdList', mdList)
 
 mdList.forEach(item => {
-  console.log('fs.existsSync(`./notion/${item}`)', fs.existsSync(`./notion/${item}`))
-
   if (!fs.existsSync(`./notion/${item}`)) {
     const filePath = `./typora/${item}`
     const fileName = item.split('.')[0]
