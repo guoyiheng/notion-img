@@ -1,8 +1,8 @@
-## 一、Spring概述 
+## 一、Spring 概述
 
-#### 1.1 web项目开发中的耦合度问题
+#### 1.1 web 项目开发中的耦合度问题
 
-- 在Servlet中需要调用service中的方法，则需要在Servlet类中通过new关键字创建Service的实例
+- 在 Servlet 中需要调用 service 中的方法，则需要在 Servlet 类中通过 new 关键字创建 Service 的实例
 
   ```java
   public interface ProductService{
@@ -28,10 +28,10 @@
 
   ```java
   public class ProductListServlet extends HttpServlet{
-      
+
       //在servlet中使用new关键字创建ProductServiceImpl1对象，增加了servlet和service的耦合度
       private ProductService productService = new ProductServiceImpl1();
-      
+
       protected void doGet(HttpServletRequest request,HttpServletResponse response){
           doPost(request,response);
       }
@@ -41,87 +41,87 @@
   }
   ```
 
-- 在service实现类中需要调用DAO中的方法，也需要在servcie实现类通过new关键字创建DAO实现类对象
-- 如果使用new关键字创建对象：
+- 在 service 实现类中需要调用 DAO 中的方法，也需要在 servcie 实现类通过 new 关键字创建 DAO 实现类对象
+- 如果使用 new 关键字创建对象：
   - 失去了面向接口编程的灵活性
   - 代码的侵入性增强（增加了耦合度）、降低了代码的灵活性
   - 增强项目的扩展性
 
 #### 1.2 面向接口编程
 
-| 面向接口编程                             |
-| ---------------------------------------- |
-| ![1616724645995](imgs/1616724645995.png) |
+| 面向接口编程                               |
+| ------------------------------------------ |
+| ![1616724645995](Spring/1616724645995.png) |
 
-`解决方案`：在Servlet中定义Service接口的对象变量，不使用new关键字创建实现类对象，在servlet的实例化的时候，通过反射动态的给Service对象变量赋值。
+`解决方案`：在 Servlet 中定义 Service 接口的对象变量，不使用 new 关键字创建实现类对象，在 servlet 的实例化的时候，通过反射动态的给 Service 对象变量赋值。
 
-`如何实现`：Spring可以做到！！！
+`如何实现`：Spring 可以做到！！！
 
-#### 1.3 Spring介绍
+#### 1.3 Spring 介绍
 
-> Spring是一个`轻量级的控制反转和面向切面的容器`框架，用来解决企业项目开发的复杂度问题—解耦
+> Spring 是一个`轻量级的控制反转和面向切面的容器`框架，用来解决企业项目开发的复杂度问题—解耦
 
 - 轻量级：体积小，对代码没有侵入性
-- 控制反转：IoC（Inverse of Control）,把创建对象的工作交由Spring完成，Spring在创建对象的时候同时可以完成对象属性赋值（DI）
+- 控制反转：IoC（Inverse of Control）,把创建对象的工作交由 Spring 完成，Spring 在创建对象的时候同时可以完成对象属性赋值（DI）
 - 面向切面：AOP（Aspect Oriented Programming）面向切面编程，可以在不改变原有业务逻辑的情况下实现对业务的增强
 - 容器：实例的容器，管理创建的对象
 
-#### 1.4 Spring架构
+#### 1.4 Spring 架构
 
 - 官网 https://spring.io/
 
-  ![1616728103181](imgs/1616728103181.png)
+  ![1616728103181](Spring/1616728103181.png)
 
-- Spring架构图
+- Spring 架构图
 
-  ![1616728204844](imgs/1616728204844.png)
+  ![1616728204844](Spring/1616728204844.png)
 
 ###### 1.4.1 Core Container
 
-> Spring容器组件，用于完成实例的创建和管理
+> Spring 容器组件，用于完成实例的创建和管理
 >
 > - core
-> - beans   实例管理
+> - beans 实例管理
 > - context 容器上下文
 
-######  1.4.2 AOP、Aspects
+###### 1.4.2 AOP、Aspects
 
-> Spring AOP组件，实现面向切面编程
+> Spring AOP 组件，实现面向切面编程
 >
 > - aop
 > - aspects
 
 ###### 1.4.3 web
 
-> Spring web组件实际指的是SpringMVC框架，实现web项目的MVC控制
+> Spring web 组件实际指的是 SpringMVC 框架，实现 web 项目的 MVC 控制
 >
-> - web (Spring对web项目的支持)
-> - webmvc (SpringMVC组件)
+> - web (Spring 对 web 项目的支持)
+> - webmvc (SpringMVC 组件)
 
 ###### 1.4.4 Data Access
 
-> Spring数据访问组件，也是一个基于JDBC封装的持久层框架（即使没有mybatis，Spring也可以完成持久化操作）
+> Spring 数据访问组件，也是一个基于 JDBC 封装的持久层框架（即使没有 mybatis，Spring 也可以完成持久化操作）
 >
 > - tx
 
 ###### 1.4.5 Test
 
-> Spring的单元测试组件，提供了Spring环境下的单元测试支持
+> Spring 的单元测试组件，提供了 Spring 环境下的单元测试支持
 >
 > - test
 
-## 二、Spring IoC — 基于XML
+## 二、Spring IoC — 基于 XML
 
 > Spring IoC 容器组件，可以完成对象的创建、对象属性赋值、对象管理
 
-#### 2.1 Spring框架部署（IoC）
+#### 2.1 Spring 框架部署（IoC）
 
-###### 2.1.1 创建Maven工程
+###### 2.1.1 创建 Maven 工程
 
 - Java
 - Web
 
-###### 2.1.2 添加SpringIoC依赖
+###### 2.1.2 添加 SpringIoC 依赖
 
 - core
 - beans
@@ -137,11 +137,11 @@
 </dependency>
 ```
 
-###### 2.1.3 创建Spring配置文件
+###### 2.1.3 创建 Spring 配置文件
 
-> 通过配置文件"告诉"Spring容器创建什么对象，给对象属性赋什么值
+> 通过配置文件"告诉"Spring 容器创建什么对象，给对象属性赋什么值
 
-- 在resources目录下创建名为`appicationContext.xml`的文件（文件名是可以自定义的）
+- 在 resources 目录下创建名为`appicationContext.xml`的文件（文件名是可以自定义的）
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -151,15 +151,13 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
         <!--  对于一个xml文件如果作为框架的配置文件，需要遵守框架的配置规则  -->
         <!--  通常一个框架为了让开发者能够正确的配置，都会提供xml的规范文件（dtd\xsd）  -->
-        
+
 </beans>
 ```
 
+#### 2.2 SpringIoC 使用
 
-
-#### 2.2 SpringIoC使用
-
-> 使用 SpringIoC组件创建并管理对象
+> 使用 SpringIoC 组件创建并管理对象
 
 ###### 2.2.1 创建一个实体类
 
@@ -175,7 +173,7 @@ public class Student {
 }
 ```
 
-###### 2.2.2 在Spring配置文件中配置实体类
+###### 2.2.2 在 Spring 配置文件中配置实体类
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -195,7 +193,7 @@ public class Student {
 </beans>
 ```
 
-###### 2.2.3 初始化Spring对象工厂，获取对象
+###### 2.2.3 初始化 Spring 对象工厂，获取对象
 
 - ClassPathXMLApplicationContext
 
@@ -206,14 +204,14 @@ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app
 Student student2 = (Student) context.getBean("stu");
 ```
 
-#### 2.3 IoC和DI
+#### 2.3 IoC 和 DI
 
-- IoC (Inverse of Control) 控制反转，通过Spring对象工厂完成对象的创建
-- DI (Dependency Injection)依赖注入，在Spring完成对象创建的同时依赖Spring容器完成对象属性的赋值
+- IoC (Inverse of Control) 控制反转，通过 Spring 对象工厂完成对象的创建
+- DI (Dependency Injection)依赖注入，在 Spring 完成对象创建的同时依赖 Spring 容器完成对象属性的赋值
 
 ###### 2.3.1 IoC
 
-> 当我们需要通过Spring对象工厂创建某个类的对象时候，需要将这个交给Spring管理——通过bean标签配置
+> 当我们需要通过 Spring 对象工厂创建某个类的对象时候，需要将这个交给 Spring 管理——通过 bean 标签配置
 
 ```xml
 <!--通过bean将实体类配置给Spring进行管理,id表示实体类的唯一表示-->
@@ -224,7 +222,7 @@ Student student2 = (Student) context.getBean("stu");
 
 ###### 2.3.2 DI
 
-> 通过Spring容器给创建的对象属性赋值
+> 通过 Spring 容器给创建的对象属性赋值
 
 ```xml
 <bean id="clazz" class="com.qfedu.ioc.bean.Clazz"></bean>
@@ -235,25 +233,25 @@ Student student2 = (Student) context.getBean("stu");
 </bean>
 ```
 
-#### 2.4 DI依赖注入
+#### 2.4 DI 依赖注入
 
 ###### 2.4.1 依赖注入三种方式
 
-> Spring容器加载配置文件之后，通过`反射`创建类的对象，并给属性赋值；
+> Spring 容器加载配置文件之后，通过`反射`创建类的对象，并给属性赋值；
 >
-> Spring容器通过反射实现属性注入有三种方式：
+> Spring 容器通过反射实现属性注入有三种方式：
 >
-> - set方法注入
+> - set 方法注入
 > - 构造器注入
 > - 接口注入（不常用）
 
-###### 2.4.2 set方法注入
+###### 2.4.2 set 方法注入
 
-> 在bean标签中通过配置property标签给属性属性赋值，实际上就是通过反射调用set方法完成属性的注入
+> 在 bean 标签中通过配置 property 标签给属性属性赋值，实际上就是通过反射调用 set 方法完成属性的注入
 
 **简单类型及字符串**
 
-- 直接通过property标签的value属性赋值
+- 直接通过 property 标签的 value 属性赋值
 
 ```xml
 <!--通过bean将实体类配置给Spring进行管理,id表示实体类的唯一表示-->
@@ -268,7 +266,7 @@ Student student2 = (Student) context.getBean("stu");
 
 **日期类型**
 
-- 方式1：在property标签中通过ref引用Spring容器中的一个对象
+- 方式 1：在 property 标签中通过 ref 引用 Spring 容器中的一个对象
 
 ```xml
 <bean id="date" class="java.util.Date"></bean>
@@ -279,7 +277,7 @@ Student student2 = (Student) context.getBean("stu");
 </bean>
 ```
 
-- 方式2：在property标签中添加子标签bean来指定对象
+- 方式 2：在 property 标签中添加子标签 bean 来指定对象
 
 ```xml
 <bean id="stu" class="com.qfedu.ioc.bean.Student" >
@@ -292,7 +290,7 @@ Student student2 = (Student) context.getBean("stu");
 
 **自定义类对象属性**
 
-- 方式1：
+- 方式 1：
 
 ```xml
 <bean id="cla" class="com.qfedu.ioc.bean.Clazz">
@@ -306,7 +304,7 @@ Student student2 = (Student) context.getBean("stu");
 </bean>
 ```
 
-- 方式2
+- 方式 2
 
 ```xml
 <bean id="stu" class="com.qfedu.ioc.bean.Student">
@@ -324,7 +322,7 @@ Student student2 = (Student) context.getBean("stu");
 
 - List
 
-  - List<String>  List中的元素是字符串或者简单类型的封装类
+  - List<String> List 中的元素是字符串或者简单类型的封装类
 
   ```xml
   <property name="hobbies" value="旅游,电影"/>
@@ -340,7 +338,7 @@ Student student2 = (Student) context.getBean("stu");
   </property>
   ```
 
-  - List<Object> List中的元素是对象类型
+  - List<Object> List 中的元素是对象类型
 
   ```xml
   <property name="hobbies" >
@@ -502,12 +500,12 @@ public class Student{
 </bean>
 ```
 
-#### 2.5 Bean的作用域
+#### 2.5 Bean 的作用域
 
-> 在bean标签可以通过scope属性指定对象的的作用域
+> 在 bean 标签可以通过 scope 属性指定对象的的作用域
 >
-> - scope="singleton"  表示当前bean是单例模式（默认饿汉模式，Spring容器初始化阶段就会完成此对象的创建；当在bean标签中设置 lazy-init="true"变为懒汉模式）
-> - scope="prototype" 表示当前bean为非单例模式，每次通过Spring容器获取此bean的对象时都会创建一个新的对象
+> - scope="singleton" 表示当前 bean 是单例模式（默认饿汉模式，Spring 容器初始化阶段就会完成此对象的创建；当在 bean 标签中设置 lazy-init="true"变为懒汉模式）
+> - scope="prototype" 表示当前 bean 为非单例模式，每次通过 Spring 容器获取此 bean 的对象时都会创建一个新的对象
 
 - 单例
 
@@ -521,25 +519,23 @@ public class Student{
 <bean id="book" class="com.qfedu.ioc.bean.Book" scope="prototype"></bean>
 ```
 
+#### 2.6 Bean 的声明周期方法
 
+> 在 bean 标签中通过 init-method 属性指定当前 bean 的初始化方法，初始化方法在构造器执行之后执行，通过 destroy-method 属性指定当前 bean 的销毁方法，销毁方法在对象销毁之前执行-->
 
-#### 2.6 Bean的声明周期方法
-
-> 在bean标签中通过init-method属性指定当前bean的初始化方法，初始化方法在构造器执行之后执行，通过destroy-method属性指定当前bean的销毁方法，销毁方法在对象销毁之前执行-->
-
-- Bean类
+- Bean 类
 
   ```java
   public class Book {
-  
+
       private int bookId;
       private String bookName;
-  
+
        //初始化方法：在创建当前类对象时调用的方法，进行一些资源准备工作
       public void init(){
           System.out.println("-------init");
       }
-  
+
       //销毁方法：在Spring容器销毁对象时调用此方法，进行一些资源回收性的操作
       public void destory(){
           System.out.println("-------destory");
@@ -547,7 +543,7 @@ public class Student{
   }
   ```
 
-- Spring配置文件
+- Spring 配置文件
 
   ```xml
   <bean id="book" class="com.qfedu.ioc.bean.Book" scope="prototype"init-method="init" destroy-method="destory" ></bean>
@@ -555,12 +551,12 @@ public class Student{
 
 #### 2.7 自动装配
 
-> 自动装配：Spring在实例化当前bean的时候从Spring容器中找到匹配的实例赋值给当前bean的属性
+> 自动装配：Spring 在实例化当前 bean 的时候从 Spring 容器中找到匹配的实例赋值给当前 bean 的属性
 >
 > 自动装配策略有两种：
 >
-> - byName  根据当前Bean的属性名在Spring容器中寻找匹配的对象 ，如果根据name找打了bean但是类型不匹配则抛出异常
-> - byType  根据当前Bean的属性类型在Spring容器中寻找匹配的对象，如果根据类型找到了多个bean也会抛出异常
+> - byName 根据当前 Bean 的属性名在 Spring 容器中寻找匹配的对象 ，如果根据 name 找打了 bean 但是类型不匹配则抛出异常
+> - byType 根据当前 Bean 的属性类型在 Spring 容器中寻找匹配的对象，如果根据类型找到了多个 bean 也会抛出异常
 
 - byName
 
@@ -580,23 +576,21 @@ public class Student{
 
 #### 2.8 SpringIoC 工作原理
 
-![1616752252731](imgs/1616752252731.png)
-
-
+![1616752252731](Spring/1616752252731.png)
 
 ## 三、Spring IoC — 基于注解
 
-> SpringIoc的使用，需要我们通过XML将类声明给Spring容器进行管理，从而通过Spring工厂完成对象的创建及属性值的注入；
+> SpringIoc 的使用，需要我们通过 XML 将类声明给 Spring 容器进行管理，从而通过 Spring 工厂完成对象的创建及属性值的注入；
 >
-> Spring除了提供基于XML的配置方式，同时提供了基于注解的配置：直接在实体类中添加注解声明给Spring容器管理，以简化开发步骤。
+> Spring 除了提供基于 XML 的配置方式，同时提供了基于注解的配置：直接在实体类中添加注解声明给 Spring 容器管理，以简化开发步骤。
 
-#### 3.1 Spring框架部署
+#### 3.1 Spring 框架部署
 
-###### 3.1.1 创建Maven项目
+###### 3.1.1 创建 Maven 项目
 
 略
 
-###### 3.2.2 添加SpringIoC依赖
+###### 3.2.2 添加 SpringIoC 依赖
 
 ```xml
 <dependency>
@@ -606,9 +600,9 @@ public class Student{
 </dependency>
 ```
 
-###### 3.2.3 创建Spring配置文件
+###### 3.2.3 创建 Spring 配置文件
 
-- 因为Spring容器初始化时，只会加载applicationContext.xml文件，那么我们在实体类中添加的注解就不会被Spring扫描，所以我们需要`在applicationContext.xml声明Spring的扫描范围`，以达到Spring初始化时扫描带有注解的实体类并完成初始化工作
+- 因为 Spring 容器初始化时，只会加载 applicationContext.xml 文件，那么我们在实体类中添加的注解就不会被 Spring 扫描，所以我们需要`在applicationContext.xml声明Spring的扫描范围`，以达到 Spring 初始化时扫描带有注解的实体类并完成初始化工作
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -629,63 +623,63 @@ public class Student{
 </beans>
 ```
 
-#### 3.2 IoC常用注解
+#### 3.2 IoC 常用注解
 
 ###### 3.2.1 `@Component`
 
-- 类注解，声明此类被Spring容器进行管理，相当于bean标签的作用
-- `@Component(value="stu")` value属性用于指定当前bean的id，相当于bean标签的id属性；value属性也可以省略，如果省略当前类的id默认为类名首字母改小写
-- 除了@Component之外 @Service、@Controller、@Repository这三个注解也可以将类声明给Spring管理，他们主要是语义上的区别
-  - @Controller 注解主要声明将控制器类配置给Spring管理，例如Servlet
-  - @Service 注解主要声明业务处理类配置Spring管理，Service接口的实现类
-  - @Repository 直接主要声明持久化类配置给Spring管理，DAO接口
-  - @Component 除了控制器、servcie和DAO之外的类一律使用此注解声明
+- 类注解，声明此类被 Spring 容器进行管理，相当于 bean 标签的作用
+- `@Component(value="stu")` value 属性用于指定当前 bean 的 id，相当于 bean 标签的 id 属性；value 属性也可以省略，如果省略当前类的 id 默认为类名首字母改小写
+- 除了@Component 之外 @Service、@Controller、@Repository 这三个注解也可以将类声明给 Spring 管理，他们主要是语义上的区别
+  - @Controller 注解主要声明将控制器类配置给 Spring 管理，例如 Servlet
+  - @Service 注解主要声明业务处理类配置 Spring 管理，Service 接口的实现类
+  - @Repository 直接主要声明持久化类配置给 Spring 管理，DAO 接口
+  - @Component 除了控制器、servcie 和 DAO 之外的类一律使用此注解声明
 
 ###### 3.2.2 `@Scope`
 
-- 类注解，用于声明当前类单例模式还是 非单例模式，相当于bean标签的scope属性
+- 类注解，用于声明当前类单例模式还是 非单例模式，相当于 bean 标签的 scope 属性
 - @Scope("prototype") 表示声明当前类为非单例模式（默认单例模式）
 
 ###### 3.2.3 `@Lazy`
 
-- 类注解，用于声明一个单例模式的Bean是否为懒汉模式
+- 类注解，用于声明一个单例模式的 Bean 是否为懒汉模式
 - @Lazy(true) 表示声明为懒汉模式，默认为饿汉模式
 
 ###### 3.2.4 `@PostConstruct`
 
-- 方法注解，声明一个方法为当前类的初始化方法（在构造器之后执行），相当于bean标签的init-method属性
+- 方法注解，声明一个方法为当前类的初始化方法（在构造器之后执行），相当于 bean 标签的 init-method 属性
 
 ###### 3.2.5 `@PreDestroy`
 
-- 方法注解，声明一个方法为当前类的销毁方法（在对象从容器中释放之前执行），相当于bean标签的destory-method属性
+- 方法注解，声明一个方法为当前类的销毁方法（在对象从容器中释放之前执行），相当于 bean 标签的 destory-method 属性
 
 ###### 3.2.6 `@Autowired`
 
-- 属性注解、方法注解（set方法），声明当前属性自动装配，默认byType
+- 属性注解、方法注解（set 方法），声明当前属性自动装配，默认 byType
 
--  @Autowired(required = false)  通过requried属性设置当前自动装配是否为必须（默认必须——如果没有找到类型与属性类型匹配的bean则抛出异常）
+- @Autowired(required = false) 通过 requried 属性设置当前自动装配是否为必须（默认必须——如果没有找到类型与属性类型匹配的 bean 则抛出异常）
 
-  - byType
+- byType
 
-  - ref引用
+- ref 引用
 
-  ```java
-  @Autowired
-  public void setClazz(@Qualifier("c2") Clazz clazz) {
-      this.clazz = clazz;
-  }
-  ```
+```java
+@Autowired
+public void setClazz(@Qualifier("c2") Clazz clazz) {
+    this.clazz = clazz;
+}
+```
 
 ###### 3.2.7 `@Resource`
 
 - 属性注解，也用于声明属性自动装配
-- 默认装配方式为byName，如果根据byName没有找到对应的bean，则继续根据byType寻找对应的bean，根据byType如果依然没有找到Bean或者找到不止一个类型匹配的bean,则抛出异常。
+- 默认装配方式为 byName，如果根据 byName 没有找到对应的 bean，则继续根据 byType 寻找对应的 bean，根据 byType 如果依然没有找到 Bean 或者找到不止一个类型匹配的 bean,则抛出异常。
 
 ## 四、代理设计模式
 
 #### 4.1 生活中的代理
 
-![1616999162162](imgs/1616999162162.png)
+![1616999162162](Spring/1616999162162.png)
 
 代理设计模式的优点：将通用性的工作都交给代理对象完成，被代理对象只需专注自己的核心业务。
 
@@ -693,7 +687,7 @@ public class Student{
 
 > 静态代理，代理类只能够为特定的类生产代理对象，不能代理任意类
 
-![1617001027208](imgs/1617001027208.png)
+![1617001027208](Spring/1617001027208.png)
 
 **使用代理的好处**
 
@@ -707,14 +701,14 @@ public class Student{
 
 > 动态代理，几乎可以为所有的类产生代理对象
 >
-> 动态代理的实现方式有2种：
+> 动态代理的实现方式有 2 种：
 >
-> - JDK动态代理
-> - CGLib动态大力
+> - JDK 动态代理
+> - CGLib 动态大力
 
-###### 4.3.1 JDK动态代理
+###### 4.3.1 JDK 动态代理
 
-- JDK动态代理类实现：
+- JDK 动态代理类实现：
 
 ```java
 /***
@@ -778,15 +772,15 @@ GenaralDAO proxy = (GenaralDAO)jdkDynamicProxy.getProxy();
 proxy.insert(student);
 ```
 
-###### 4.3.2 CGLib动态代理
+###### 4.3.2 CGLib 动态代理
 
-> 由于JDK动态代理是通过被代理类实现的接口来创建代理对象的，因此JDK动态代理只能代理实现了接口的类的对象。如果一个类没有实现任何接口，该如何产生代理对象呢？
+> 由于 JDK 动态代理是通过被代理类实现的接口来创建代理对象的，因此 JDK 动态代理只能代理实现了接口的类的对象。如果一个类没有实现任何接口，该如何产生代理对象呢？
 >
-> CGLib动态代理，是通过创建被代理类的子类来创建代理对象的，因此即使没有实现任何接口的类也可以通过CGLib产生代理对象
+> CGLib 动态代理，是通过创建被代理类的子类来创建代理对象的，因此即使没有实现任何接口的类也可以通过 CGLib 产生代理对象
 >
-> CGLib动态代理不能为final类创建代理对象
+> CGLib 动态代理不能为 final 类创建代理对象
 
-- 添加CGLib的依赖
+- 添加 CGLib 的依赖
 
 ```XML
 <!-- https://mvnrepository.com/artifact/cglib/cglib -->
@@ -797,7 +791,7 @@ proxy.insert(student);
 </dependency>
 ```
 
-- CGLib动态代理实现：
+- CGLib 动态代理实现：
 
 ```java
 /**
@@ -863,11 +857,11 @@ proxy.update();
 >
 > 基于动态代理实现在不改变原有业务的情况下对业务逻辑进行增强
 
-![1617008695615](imgs/1617008695615.png)
+![1617008695615](Spring/1617008695615.png)
 
-#### 5.2 Spring AOP框架部署
+#### 5.2 Spring AOP 框架部署
 
-###### 5.2.1 创建Maven项目
+###### 5.2.1 创建 Maven 项目
 
 ###### 5.2.2 添加依赖
 
@@ -888,9 +882,9 @@ proxy.update();
 </dependency>
 ```
 
-###### 5.2.3 创建spring配置文件
+###### 5.2.3 创建 spring 配置文件
 
-- 需要引入aop的命名空间
+- 需要引入 aop 的命名空间
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -906,9 +900,9 @@ proxy.update();
 </beans>
 ```
 
-#### 5.3 AOP配置—基于XML
+#### 5.3 AOP 配置—基于 XML
 
-> 在DAO的方法添加开启事务和提交事务的逻辑
+> 在 DAO 的方法添加开启事务和提交事务的逻辑
 
 ###### 5.3.1 创建一个类，定义要添加的业务逻辑
 
@@ -926,7 +920,7 @@ public class TxManager {
 }
 ```
 
-###### 5.3.2 配置aop
+###### 5.3.2 配置 aop
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -962,11 +956,11 @@ public class TxManager {
 
 1.创建切面类，在切面类定义切点方法
 
-2.将切面类配置给Spring容器
+2.将切面类配置给 Spring 容器
 
 3.声明切入点
 
-4.配置AOP的通知策略
+4.配置 AOP 的通知策略
 
 #### 5.4 切入点的声明
 
@@ -998,7 +992,7 @@ public class TxManager {
 <aop:pointcut id="pc7" expression="execution(* *(..))"/>
 ```
 
-###### 5.4.2 AOP使用注意事项
+###### 5.4.2 AOP 使用注意事项
 
 ```java
 //如果要使用Spring aop面向切面编程，调用切入点方法的对象必须通过Spring容器获取
@@ -1009,9 +1003,9 @@ BookServiceImpl bookService = (BookServiceImpl) context.getBean("bookServiceImpl
 bookService.addBook();
 ```
 
-#### 5.5 AOP通知策略
+#### 5.5 AOP 通知策略
 
->  AOP通知策略：就是声明将切面类中的切点方法如何织入到切入点
+> AOP 通知策略：就是声明将切面类中的切点方法如何织入到切入点
 >
 > - before
 > - after
@@ -1082,14 +1076,14 @@ public class MyAspect {
 
 #### 6.1 Spring AOP 注解配置框架部署
 
-###### 6.1.1 创建Maven工程
+###### 6.1.1 创建 Maven 工程
 
-###### 6.1.2 添加Spring依赖
+###### 6.1.2 添加 Spring 依赖
 
 - context
 - aspects
 
-###### 6.1.3 Spring配置文件
+###### 6.1.3 Spring 配置文件
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1113,7 +1107,7 @@ public class MyAspect {
 </beans>
 ```
 
-#### 6.2 AOP注解配置案例
+#### 6.2 AOP 注解配置案例
 
 ```java
 @Component
@@ -1146,30 +1140,30 @@ public class TransactionManager {
 }
 ```
 
-`注意`：注解使用虽然方便，但是只能在源码上添加注解，因此我们的自定义类提倡使用注解配置；但如果如果使用到第三方提供的类则需要通过xml配置形式完成配置。
+`注意`：注解使用虽然方便，但是只能在源码上添加注解，因此我们的自定义类提倡使用注解配置；但如果如果使用到第三方提供的类则需要通过 xml 配置形式完成配置。
 
-## 七、Spring整合MyBatis
+## 七、Spring 整合 MyBatis
 
-> Spring两大核心思想：IoC 和 AOP
+> Spring 两大核心思想：IoC 和 AOP
 >
-> IoC : 控制反转，Spring容器可以完成对象的创建、属性注入、对象管理等工作
+> IoC : 控制反转，Spring 容器可以完成对象的创建、属性注入、对象管理等工作
 >
 > AOP : 面向切面，在不修改原有业务逻辑的情况下，实现原有业务的增强
 
-#### 7.1 Spring可以对MyBatis提供哪些支持？
+#### 7.1 Spring 可以对 MyBatis 提供哪些支持？
 
-- **IoC支持** SpringIoC 可以为MyBatis完成DataSource、SqlSessionFactory、SqlSession以及DAO对象的创建
+- **IoC 支持** SpringIoC 可以为 MyBatis 完成 DataSource、SqlSessionFactory、SqlSession 以及 DAO 对象的创建
 
-- **AOP支持**使用Spring提供的事务管理切面类完成对MyBatis数据库操作中的事务管理
+- **AOP 支持**使用 Spring 提供的事务管理切面类完成对 MyBatis 数据库操作中的事务管理
 
-#### 7.2 Spring整合MyBatis准备工作
+#### 7.2 Spring 整合 MyBatis 准备工作
 
-###### 7.2.1 创建Maven工程
+###### 7.2.1 创建 Maven 工程
 
-###### 7.2.2 部署MyBatis框架
+###### 7.2.2 部署 MyBatis 框架
 
 - 添加依赖
-  - Mysql驱动
+  - Mysql 驱动
   - mybatis
 
 ```xml
@@ -1188,7 +1182,7 @@ public class TransactionManager {
 </dependency>
 ```
 
--  创建MyBatis配置文件(创建配置文件之后无需进行任何配置)
+- 创建 MyBatis 配置文件(创建配置文件之后无需进行任何配置)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -1199,7 +1193,7 @@ public class TransactionManager {
 </configuration>
 ```
 
-###### 7.2.3 部署Spring框架
+###### 7.2.3 部署 Spring 框架
 
 - 添加依赖
 
@@ -1223,7 +1217,7 @@ public class TransactionManager {
 </dependency>
 ```
 
-- 创建Spring配置文件：applicationContext.xml
+- 创建 Spring 配置文件：applicationContext.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1237,14 +1231,14 @@ public class TransactionManager {
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
-    
+
 
 </beans>
 ```
 
-###### 7.2.4 添加Spring整合MyBatis的依赖
+###### 7.2.4 添加 Spring 整合 MyBatis 的依赖
 
-- mybatis-spring  就是mybatis提供的兼容Spring的补丁
+- mybatis-spring 就是 mybatis 提供的兼容 Spring 的补丁
 
 ```xml
 <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
@@ -1255,11 +1249,11 @@ public class TransactionManager {
 </dependency>
 ```
 
-#### 7.3 Spring整合MyBatis整合IoC配置
+#### 7.3 Spring 整合 MyBatis 整合 IoC 配置
 
-###### 7.3.1 整合Druid连接池
+###### 7.3.1 整合 Druid 连接池
 
-- 添加druid的依赖
+- 添加 druid 的依赖
 
 ```xml
 <dependency>
@@ -1269,7 +1263,7 @@ public class TransactionManager {
 </dependency>
 ```
 
-- 创建druid.properties属性文件
+- 创建 druid.properties 属性文件
 
 ```properties
 druid.driver=com.mysql.jdbc.Driver
@@ -1284,7 +1278,7 @@ druid.pool.maxActive=20
 druid.pool.timeout=30000
 ```
 
-- 在applicationContext.xml中配置DruidDataSource
+- 在 applicationContext.xml 中配置 DruidDataSource
 
 ```xml
 <!--加载druid.properties属性文件-->
@@ -1304,9 +1298,9 @@ druid.pool.timeout=30000
 </bean>
 ```
 
-###### 7.3.2 整合MyBatis—创建SqlSessionFactory
+###### 7.3.2 整合 MyBatis—创建 SqlSessionFactory
 
-> 依赖Spring容器创建MyBatis的SqlSessionFactory对象
+> 依赖 Spring 容器创建 MyBatis 的 SqlSessionFactory 对象
 
 ```xml
 <!--依赖Spring容器完成MyBatis的SqlSessionFactory对象的创建-->
@@ -1322,7 +1316,7 @@ druid.pool.timeout=30000
 </bean>
 ```
 
-###### 7.3.3 整合MyBatis-创建Mapper
+###### 7.3.3 整合 MyBatis-创建 Mapper
 
 ```xml
 <!--加载dao包中的所有DAO接口，通过sqlSessionFactory获取SqlSession，然后创建所有的DAO接口对象，存储在Spring容器-->
@@ -1332,35 +1326,35 @@ druid.pool.timeout=30000
 </bean>
 ```
 
-#### 7.4 Spring整合MyBatis整合AOP配置
+#### 7.4 Spring 整合 MyBatis 整合 AOP 配置
 
-> 使用Spring提供的事务管理切面类 完成DAO中增删改操作的事务管理
+> 使用 Spring 提供的事务管理切面类 完成 DAO 中增删改操作的事务管理
 
 ###### 7.4.1 事务的隔离级别
 
->  isolation 设置事务隔离级别：READ_UNCOMMITTED  ,READ_COMMITTED , REPEATABLE_READ , SERIALIZABLE
+> isolation 设置事务隔离级别：READ_UNCOMMITTED ,READ_COMMITTED , REPEATABLE_READ , SERIALIZABLE
 
-![1617093621853](imgs/1617093621853.png)
+![1617093621853](Spring/1617093621853.png)
 
 ###### 7.4.2 事务的传播机制
 
- propagation 设置事务的传播机制    
+propagation 设置事务的传播机制
 
-- REQUIRED 如果上层方法没有事务，则创建一个新的事务；如果已经存在事务，则加入到事务中。    
+- REQUIRED 如果上层方法没有事务，则创建一个新的事务；如果已经存在事务，则加入到事务中。
 
 - SUPPORTS 如果上层方法没有事务，则以非事务方式执行；如果已经存在事务，则加入到事务中。
 
-- REQUIRES_NEW 如果上层方法没有事务，则创建一个新的事务；如果已经存在事务，则将当前事务挂起。 
+- REQUIRES_NEW 如果上层方法没有事务，则创建一个新的事务；如果已经存在事务，则将当前事务挂起。
 
-- NOT_SUPPORTED 如果上层方法没有事务，则以非事务方式执行；如果已经存在事务，则将当前事务挂起。    
+- NOT_SUPPORTED 如果上层方法没有事务，则以非事务方式执行；如果已经存在事务，则将当前事务挂起。
 
-- NEVER 如果上层方法没有事务，则以非事务方式执行；如果已经存在事务，则抛出异常。    
+- NEVER 如果上层方法没有事务，则以非事务方式执行；如果已经存在事务，则抛出异常。
 
-- MANDATORY 如果上层方法已经存在事务，则加入到事务中执行；如果不存在事务则抛出异常。    
+- MANDATORY 如果上层方法已经存在事务，则加入到事务中执行；如果不存在事务则抛出异常。
 
 - NESTED 如果上层方法没有事务，则创建一个新的事务；如果已经存在事务，则嵌套到当前事务中。
 
-###### 7.4.3 Spring AOP事务管理配置—XML配置
+###### 7.4.3 Spring AOP 事务管理配置—XML 配置
 
 ```xml
 <!--1.将Spring提供的事务管理配置配置给Spring容器-->
@@ -1385,9 +1379,9 @@ druid.pool.timeout=30000
 </aop:config>
 ```
 
-###### 7.4.4 Spring AOP事务管理配置—注解配置
+###### 7.4.4 Spring AOP 事务管理配置—注解配置
 
-- 在applicationContext.xml中配置事务管理，声明使用注解方式进行事务配置
+- 在 applicationContext.xml 中配置事务管理，声明使用注解方式进行事务配置
 
 ```xml
 <!--使用注解进行事务管理前提是 IoC需要进行注解配置-->
@@ -1403,7 +1397,7 @@ druid.pool.timeout=30000
 <tx:annotation-driven transaction-manager="transactionManager"/>
 ```
 
-- 在需要Spring进行事务管理的方法上添加`@Transactional`注解
+- 在需要 Spring 进行事务管理的方法上添加`@Transactional`注解
 
 ```java
 @Transactional(isolation = Isolation.REPEATABLE_READ ,propagation = Propagation.SUPPORTS )
@@ -1412,9 +1406,9 @@ public List<User> listUsers() {
 }
 ```
 
-## 八、基于Spring的单元测试
+## 八、基于 Spring 的单元测试
 
-> 如果想要使用Spring容器实现属性注入、实现AOP面向切面编程，对象必须通过Spring容器获取；为了便于Spring环境下的测试，Spring提供了test组件，专门针对Spring环境进行单元测试。
+> 如果想要使用 Spring 容器实现属性注入、实现 AOP 面向切面编程，对象必须通过 Spring 容器获取；为了便于 Spring 环境下的测试，Spring 提供了 test 组件，专门针对 Spring 环境进行单元测试。
 
 #### 8.1 添加依赖
 
@@ -1462,4 +1456,3 @@ public class UserServiceImplTest {
 
 }
 ```
-
