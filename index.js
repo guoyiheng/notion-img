@@ -14,8 +14,6 @@ mdList.forEach(item => {
       new RegExp(fileName + '\\/', 'g'),
       `https://raw.githubusercontent.com/mypridelife/notion_img/main/typora/${fileName}/`
     )
-    console.log('newFileContent', newFileContent)
-
     fs.writeFileSync(`./notion/${item}`, newFileContent)
   }
 })
